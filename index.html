@@ -11,18 +11,54 @@
       rel="stylesheet"
     />
     <title>Sana ❤ Yousuf — Walima Invitation</title>
-    <meta name="description" content="Sana weds Yousuf — a digital wedding invitation for Walima ceremony on Sunday, 1st November 2026 at Sapphire Suites, Lucknow." />
+    <meta name="description" content="With joyful hearts and grateful families — Sana Fatima & Yousuf Qureshi invite you to their Walima ceremony on Sunday, 1st November 2026 at Sapphire Suites, Lucknow." />
+
+    <!-- Open Graph / Facebook / WhatsApp / iMessage -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://invitestory.in/" />
+    <meta property="og:site_name" content="Sana & Yousuf Wedding Invitation" />
+    <meta property="og:url" content="https://sana-weds-yousuf.vercel.app/" />
     <meta property="og:title" content="Sana ❤ Yousuf — Walima Invitation" />
-    <meta property="og:description" content="With joyful hearts and grateful families — Sana & Yousuf invite you to their Walima ceremony, Sunday 1st November 2026 at Sapphire Suites, Lucknow." />
-    <meta property="og:image" content="/assets/layers/hero-composite.jpg" />
-    <meta property="og:image:width" content="1024" />
-    <meta property="og:image:height" content="1536" />
+    <meta property="og:description" content="With joyful hearts and grateful families, we invite you to celebrate the Walima ceremony of Sana & Yousuf on Sunday, 1st November 2026 at Sapphire Suites, Lucknow." />
+    <meta property="og:image" content="https://sana-weds-yousuf.vercel.app/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://sana-weds-yousuf.vercel.app/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sana & Yousuf Walima Invitation - 1st November 2026" />
+
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://sana-weds-yousuf.vercel.app/" />
     <meta name="twitter:title" content="Sana ❤ Yousuf — Walima Invitation" />
-    <meta name="twitter:description" content="Join us for the Walima — Sunday, 1st November 2026, Sapphire Suites, Lucknow." />
-    <meta name="twitter:image" content="/assets/layers/hero-composite.jpg" />
+    <meta name="twitter:description" content="Join us for the Walima of Sana Fatima & Yousuf Qureshi — Sunday, 1st November 2026, Sapphire Suites, Lucknow." />
+    <meta name="twitter:image" content="https://sana-weds-yousuf.vercel.app/og-image.jpg" />
+    <meta name="twitter:image:alt" content="Sana & Yousuf Walima Invitation" />
+
+    <!-- Legacy link preview fallback -->
+    <link rel="image_src" href="https://sana-weds-yousuf.vercel.app/og-image.jpg" />
+
+    <!-- Runtime domain updater: auto-adjusts to actual deployment domain (Vercel, Netlify, custom domain) -->
+    <script>
+      (function() {
+        if (typeof window !== 'undefined' && window.location && window.location.origin) {
+          var origin = window.location.origin;
+          if (origin.indexOf('localhost') === -1 && origin.indexOf('127.0.0.1') === -1) {
+            var ogUrl = document.querySelector('meta[property="og:url"]');
+            var ogImg = document.querySelector('meta[property="og:image"]');
+            var ogSecImg = document.querySelector('meta[property="og:image:secure_url"]');
+            var twUrl = document.querySelector('meta[name="twitter:url"]');
+            var twImg = document.querySelector('meta[name="twitter:image"]');
+            var linkImg = document.querySelector('link[rel="image_src"]');
+            if (ogUrl) ogUrl.setAttribute('content', origin + '/');
+            if (twUrl) twUrl.setAttribute('content', origin + '/');
+            if (ogImg) ogImg.setAttribute('content', origin + '/og-image.jpg');
+            if (ogSecImg) ogSecImg.setAttribute('content', origin + '/og-image.jpg');
+            if (twImg) twImg.setAttribute('content', origin + '/og-image.jpg');
+            if (linkImg) linkImg.setAttribute('href', origin + '/og-image.jpg');
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
