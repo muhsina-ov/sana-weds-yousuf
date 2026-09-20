@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Volume2, VolumeX, Music } from "lucide-react";
+import { VolumeX, Music } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface MusicPlayerProps {
