@@ -44,7 +44,7 @@ export default function Home() {
     <main className="relative min-h-[100dvh] bg-[#f3ede3] text-[#1a1814]">
       <ScrollProgress />
       <MusicPlayer autoPlayTrigger={stage !== "closed"} />
-      {stage === "open" && <FloatingPetals count={32} />}
+      {stage === "open" && <FloatingPetals count={18} />}
       <motion.div
         initial={{ scale: 1.04, opacity: 0.92 }}
         animate={{

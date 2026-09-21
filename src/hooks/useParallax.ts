@@ -58,17 +58,29 @@ export function useParallax(enabled = true) {
       const dx = current.current.x - prev.current.x;
       const dy = current.current.y - prev.current.y;
       const velocity = Math.min(1, Math.hypot(dx, dy) * 18);
-      prev.current.x = current.current.x;
-      prev.current.y = current.current.y;
 
       const scrollNorm = Math.min(1.4, scrollY.current / Math.max(1, window.innerHeight));
+      const nextX = current.current.x;
+      const nextY = current.current.y * 0.88 + Math.min(1, scrollNorm) * 0.42;
 
-      setPoint({
-        x: current.current.x,
-        y: current.current.y * 0.88 + Math.min(1, scrollNorm) * 0.42,
-        scroll: scrollNorm,
-        velocity,
-      });
+      // Only trigger state updates if motion is visible to avoid unnecessary React render cycles
+      if (
+        Math.abs(dx) > 0.0008 ||
+        Math.abs(dy) > 0.0008 ||
+        Math.abs(scrollNorm - (prev.current as any).scroll || 0) > 0.001
+      ) {
+        prev.current.x = current.current.x;
+        prev.current.y = current.current.y;
+        (prev.current as any).scroll = scrollNorm;
+
+        setPoint({
+          x: nextX,
+          y: nextY,
+          scroll: scrollNorm,
+          velocity,
+        });
+      }
+
       raf = requestAnimationFrame(tick);
     };
 
@@ -108,7 +120,6 @@ export function layerTransform(
 /** 3D card tilt from local pointer position within an element */
 export function useLocalTilt(strength = 8) {
   const ref = useRef<HTMLDivElement>(null);
-  const [style, setStyle] = useState({ transform: "perspective(900px) rotateX(0deg) rotateY(0deg)" });
 
   useEffect(() => {
     const el = ref.current;
@@ -121,12 +132,18 @@ export function useLocalTilt(strength = 8) {
     let ty = 0;
     let cx = 0;
     let cy = 0;
+    let active = false;
 
     const onMove = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
       tx = ((e.clientX - r.left) / r.width) * 2 - 1;
       ty = ((e.clientY - r.top) / r.height) * 2 - 1;
+      if (!active) {
+        active = true;
+        raf = requestAnimationFrame(tick);
+      }
     };
+
     const onLeave = () => {
       tx = 0;
       ty = 0;
@@ -135,15 +152,21 @@ export function useLocalTilt(strength = 8) {
     const tick = () => {
       cx += (tx - cx) * 0.1;
       cy += (ty - cy) * 0.1;
-      setStyle({
-        transform: `perspective(900px) rotateX(${(-cy * strength).toFixed(2)}deg) rotateY(${(cx * strength).toFixed(2)}deg)`,
-      });
-      raf = requestAnimationFrame(tick);
+      el.style.transform = `perspective(900px) rotateX(${(-cy * strength).toFixed(2)}deg) rotateY(${(cx * strength).toFixed(2)}deg)`;
+
+      if (Math.abs(tx - cx) > 0.005 || Math.abs(ty - cy) > 0.005) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        active = false;
+        if (tx === 0 && ty === 0) {
+          el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+        }
+      }
     };
 
-    el.addEventListener("pointermove", onMove);
-    el.addEventListener("pointerleave", onLeave);
-    raf = requestAnimationFrame(tick);
+    el.addEventListener("pointermove", onMove, { passive: true });
+    el.addEventListener("pointerleave", onLeave, { passive: true });
+
     return () => {
       cancelAnimationFrame(raf);
       el.removeEventListener("pointermove", onMove);
@@ -151,5 +174,5 @@ export function useLocalTilt(strength = 8) {
     };
   }, [strength]);
 
-  return { ref, style };
+  return { ref, style: undefined };
 }

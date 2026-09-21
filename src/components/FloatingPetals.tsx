@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 
-type PetalKind = "gold-petal" | "gold-shimmer" | "red-rose" | "red-rose-soft";
+type PetalKind = "gold-petal" | "gold-petal-soft" | "gold-shimmer";
 
 type FloralParticle = {
   id: number;
@@ -15,42 +15,25 @@ type FloralParticle = {
   kind: PetalKind;
 };
 
-/** Falling celebration particles: regal red rose petals, golden petals & gold leaf shimmers */
-export default function FloatingPetals({ count = 30 }: { count?: number }) {
+/** Falling celebration particles: golden petals & gold leaf shimmers only */
+export default function FloatingPetals({ count = 18 }: { count?: number }) {
   const petals = useMemo<FloralParticle[]>(
     () =>
       Array.from({ length: count }, (_, i) => {
-        // Distribute: ~40% Red rose petals, ~40% Golden petals, ~20% Gold shimmers
-        let kind: PetalKind;
-        const mod = i % 5;
-        if (mod === 0 || mod === 3) {
-          kind = i % 2 === 0 ? "red-rose" : "red-rose-soft";
-        } else if (mod === 1 || mod === 4) {
-          kind = "gold-petal";
-        } else {
-          kind = "gold-shimmer";
-        }
-
-        const isRed = kind === "red-rose" || kind === "red-rose-soft";
+        const mod = i % 3;
+        const kind: PetalKind =
+          mod === 0 ? "gold-petal" : mod === 1 ? "gold-petal-soft" : "gold-shimmer";
         const isShimmer = kind === "gold-shimmer";
 
         return {
           id: i,
-          left: (i * 17 + 3) % 100,
-          delay: (i % 9) * 0.7,
-          duration: 8.5 + (i % 6) * 1.5,
-          size: isShimmer
-            ? 5 + (i % 3) * 2
-            : isRed
-            ? 11 + (i % 4) * 3
-            : 8 + (i % 4) * 2.5,
-          drift: (i % 2 === 0 ? 1 : -1) * (20 + (i % 5) * 14),
-          opacity: isRed
-            ? 0.7 + (i % 3) * 0.12
-            : isShimmer
-            ? 0.75 + (i % 3) * 0.1
-            : 0.55 + (i % 4) * 0.12,
-          rotate: (i % 2 === 0 ? 1 : -1) * (45 + (i % 6) * 25),
+          left: (i * 19 + 5) % 100,
+          delay: (i % 7) * 0.8,
+          duration: 9 + (i % 5) * 1.6,
+          size: isShimmer ? 5 + (i % 3) * 2 : 9 + (i % 3) * 2.5,
+          drift: (i % 2 === 0 ? 1 : -1) * (18 + (i % 4) * 12),
+          opacity: isShimmer ? 0.75 + (i % 3) * 0.1 : 0.55 + (i % 3) * 0.12,
+          rotate: (i % 2 === 0 ? 1 : -1) * (35 + (i % 5) * 20),
           kind,
         };
       }),
@@ -61,38 +44,30 @@ export default function FloatingPetals({ count = 30 }: { count?: number }) {
     <div
       className="pointer-events-none fixed inset-0 z-[8] overflow-hidden"
       aria-hidden
+      style={{ contain: "strict" }}
     >
       {petals.map((p) => {
-        const isRed = p.kind === "red-rose" || p.kind === "red-rose-soft";
         const isShimmer = p.kind === "gold-shimmer";
+        const isSoft = p.kind === "gold-petal-soft";
 
         return (
           <span
             key={p.id}
-            className={`absolute top-[-10%] ${
+            className={`absolute top-[-8%] will-change-transform ${
               isShimmer
-                ? "rounded-full shadow-[0_0_10px_rgba(255,223,128,0.7)]"
-                : isRed
-                ? "rounded-[60%_40%_65%_35%] shadow-[0_4px_12px_rgba(139,0,0,0.35)]"
-                : "rounded-[45%_55%_65%_35%] shadow-[0_3px_8px_rgba(212,175,55,0.35)]"
+                ? "rounded-full shadow-[0_0_8px_rgba(255,223,128,0.6)]"
+                : "rounded-[45%_55%_65%_35%] shadow-[0_3px_8px_rgba(212,175,55,0.3)]"
             }`}
             style={{
               left: `${p.left}%`,
-              width: isShimmer ? p.size * 0.6 : p.size,
-              height: isShimmer
-                ? p.size * 0.6
-                : isRed
-                ? p.size * 1.25
-                : p.size * 1.4,
+              width: isShimmer ? p.size * 0.7 : p.size,
+              height: isShimmer ? p.size * 0.7 : p.size * 1.35,
               opacity: p.opacity,
               background: isShimmer
-                ? "radial-gradient(circle, #fff7d6 0%, #ffd700 70%, #d4af37 100%)"
-                : p.kind === "red-rose"
-                ? "radial-gradient(ellipse at 35% 25%, #d11a2a 0%, #a30818 45%, #680008 85%, #420004 100%)"
-                : p.kind === "red-rose-soft"
-                ? "radial-gradient(ellipse at 30% 30%, #e23b49 0%, #b81424 50%, #7d0210 100%)"
-                : "linear-gradient(135deg, #fff3c4 0%, #ffd700 30%, #dfb15b 60%, #b8860b 100%)",
-              filter: isRed ? "drop-shadow(0 2px 5px rgba(100,0,10,0.3))" : undefined,
+                ? "radial-gradient(circle, #fffdf0 0%, #ffd700 70%, #d4af37 100%)"
+                : isSoft
+                ? "linear-gradient(135deg, #fff8dc 0%, #fed876 40%, #cca044 100%)"
+                : "linear-gradient(135deg, #fff3c4 0%, #ffd700 35%, #dfb15b 70%, #b8860b 100%)",
               animation: `petal-fall ${p.duration}s linear ${p.delay}s infinite`,
               ["--drift" as string]: `${p.drift}px`,
               ["--spin" as string]: `${p.rotate}deg`,
