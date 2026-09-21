@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import { layerTransform, useParallax } from "../hooks/useParallax";
 import { CursorGlow } from "../components/FloatingPetals";
+import FloralMotif from "../components/FloralMotif";
 import { wedding } from "../config";
 
 const SPARKS = Array.from({ length: 26 }, (_, i) => ({
@@ -157,7 +158,7 @@ export default function Hero() {
           <div className="absolute bottom-0 left-1/2 h-[96%] w-[92%] max-w-[92%] -translate-x-1/2">
             <img
               src="/assets/layers/layer-couple.png"
-              alt={`${wedding.brideFull} and ${wedding.groomFull}`}
+              alt={`${wedding.groomFull} and ${wedding.brideFull}`}
               className="h-full w-full object-contain drop-shadow-[0_28px_50px_rgba(60,45,30,0.16)]"
               style={{ animation: "waltz-sway-inner 7.5s ease-in-out infinite" }}
               draggable={false}
@@ -188,7 +189,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Floating bouquet — slight interactive boost with velocity */}
+        {/* Floating bouquet with red rose & golden floral accents — slight interactive boost with velocity */}
         <motion.div
           className="absolute inset-0 z-[3] will-change-transform"
           style={layerTransform(point, 1.05, {
@@ -200,13 +201,22 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.1, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <img
-            src="/assets/layers/layer-05-bouquet.png"
-            alt="Golden Calla Bouquet"
-            className="absolute bottom-[16%] right-[-2%] w-[32%] max-w-[140px] opacity-95 drop-shadow-[0_16px_30px_rgba(212,175,55,0.25)]"
-            style={{ animation: "pearl-drift 5.8s ease-in-out infinite" }}
-            draggable={false}
-          />
+          <div className="absolute bottom-[14%] right-[-3%] flex items-center justify-center">
+            <img
+              src="/assets/layers/layer-05-bouquet.png"
+              alt="Golden Calla Bouquet"
+              className="w-[32vw] max-w-[140px] opacity-95 drop-shadow-[0_16px_30px_rgba(212,175,55,0.25)]"
+              style={{ animation: "pearl-drift 5.8s ease-in-out infinite" }}
+              draggable={false}
+            />
+            {/* Velvet Red Rose bloom clustered with the golden bouquet */}
+            <div
+              className="pointer-events-none absolute -left-4 -top-3 scale-90 sm:scale-100"
+              style={{ animation: "pearl-drift 6.4s ease-in-out infinite reverse" }}
+            >
+              <FloralMotif size={90} className="drop-shadow-[0_8px_18px_rgba(120,5,15,0.35)]" opacity={0.95} />
+            </div>
+          </div>
         </motion.div>
 
         {/* Sequin sparkles — brighten with pointer velocity */}
@@ -266,7 +276,7 @@ export default function Hero() {
             className="inline-block"
             whileHover={{ y: -3, transition: { duration: 0.35 } }}
           >
-            {wedding.bride}
+            {wedding.groom}
           </motion.span>
           <span className="mx-2 inline-block font-script text-[0.55em] text-[#8a7a68]">
             &
@@ -275,7 +285,7 @@ export default function Hero() {
             className="inline-block"
             whileHover={{ y: -3, transition: { duration: 0.35 } }}
           >
-            {wedding.groom}
+            {wedding.bride}
           </motion.span>
         </motion.h1>
 

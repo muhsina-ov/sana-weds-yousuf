@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Reveal, { ParallaxBlock } from "../components/Reveal";
 import { useLocalTilt } from "../hooks/useParallax";
+import FloralMotif from "../components/FloralMotif";
 import { wedding } from "../config";
 
 export default function Events() {
@@ -68,6 +69,10 @@ export default function Events() {
           <p className="mx-auto mt-4 max-w-xs font-display text-base italic leading-relaxed text-[#6e6256]">
             {e.note}
           </p>
+
+          <div className="mt-6 flex justify-center">
+            <FloralMotif size={70} className="opacity-75" />
+          </div>
         </motion.div>
 
         <div className="relative mx-auto mt-12 max-w-xs">

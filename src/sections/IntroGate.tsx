@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import FloralMotif from "../components/FloralMotif";
 import { wedding } from "../config";
 
 const ease: [number, number, number, number] = [0.65, 0, 0.35, 1];
@@ -86,6 +87,14 @@ export default function IntroGate({
         animate={opening ? { opacity: 0, scale: 0.96, filter: "blur(6px)" } : { opacity: 1, scale: 1, filter: "blur(0px)" }}
         transition={{ duration: 0.5 }}
       >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1, duration: 0.8 }}
+          className="mb-2"
+        >
+          <FloralMotif size={65} className="mx-auto" opacity={0.88} />
+        </motion.div>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -100,7 +109,7 @@ export default function IntroGate({
           transition={{ delay: 0.28, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="mt-4 font-script text-5xl text-[#1a1814] sm:text-6xl"
         >
-          {wedding.bride} & {wedding.groom}
+          {wedding.groom} & {wedding.bride}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}

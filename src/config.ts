@@ -3,14 +3,14 @@
 // ─────────────────────────────────────────────────────────────
 
 export const wedding = {
-  bride: "Sana",
   groom: "Yousuf",
-  brideFull: "Sana Fatima",
+  bride: "Sana",
   groomFull: "Yousuf Qureshi",
-  brideParents: "Daughter of the Fatima Family",
+  brideFull: "Sana Fatima",
   groomParents: "Son of the Qureshi Family",
-  hashtag: "#SanaWedsYousuf",
-  monogram: "S · Y",
+  brideParents: "Daughter of the Fatima Family",
+  hashtag: "#YousufWedsSana",
+  monogram: "Y · S",
 
   // Walima Event (countdown + calendar)
   dateISO: "2026-11-01T19:00:00+05:30",
@@ -26,7 +26,7 @@ export const wedding = {
 
   verse: {
     arabic: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
-    text: "With joyful hearts and grateful families, we warmly invite you to celebrate the Walima ceremony of Sana & Yousuf — a blessed union begun with faith and cherished with love.",
+    text: "With joyful hearts and grateful families, we warmly invite you to celebrate the Walima ceremony of Yousuf & Sana — a blessed union begun with faith and cherished with love.",
   },
 
   events: [
@@ -65,7 +65,7 @@ export const googleCalendarUrl = () => {
     d.toISOString().replace(/[-:]|\.\d{3}/g, "").slice(0, 15) + "Z";
   const params = new URLSearchParams({
     action: "TEMPLATE",
-    text: `Walima: ${wedding.bride} weds ${wedding.groom}`,
+    text: `Walima: ${wedding.groom} weds ${wedding.bride}`,
     dates: `${fmt(start)}/${fmt(end)}`,
     details: `${wedding.venue.name} — ${wedding.venue.address}. ${wedding.hashtag}`,
     location: `${wedding.venue.name}, ${wedding.venue.address}`,
@@ -87,7 +87,7 @@ export const downloadICS = () => {
     `DTSTAMP:${fmt(new Date())}`,
     `DTSTART:${fmt(start)}`,
     `DTEND:${fmt(end)}`,
-    `SUMMARY:Walima: ${wedding.bride} weds ${wedding.groom}`,
+    `SUMMARY:Walima: ${wedding.groom} weds ${wedding.bride}`,
     `DESCRIPTION:${wedding.venue.name} — ${wedding.venue.address}`,
     `LOCATION:${wedding.venue.name}\\, ${wedding.venue.address}`,
     "END:VEVENT",
@@ -97,7 +97,7 @@ export const downloadICS = () => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${wedding.bride}-${wedding.groom}-walima.ics`;
+  a.download = `${wedding.groom}-${wedding.bride}-walima.ics`;
   a.click();
   URL.revokeObjectURL(url);
 };

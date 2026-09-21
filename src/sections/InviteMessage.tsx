@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Reveal, { ParallaxBlock, Stagger, staggerItem } from "../components/Reveal";
+import FloralMotif from "../components/FloralMotif";
 import { wedding } from "../config";
 
 export default function InviteMessage() {
@@ -9,13 +10,21 @@ export default function InviteMessage() {
     <section className="relative overflow-hidden px-6 py-28">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#1a1814]/12 to-transparent" />
 
+      {/* Red Rose & Golden leaf botanical watermark accent */}
+      <ParallaxBlock speed={0.24} className="pointer-events-none absolute -left-8 top-12 opacity-[0.45] sm:left-4">
+        <FloralMotif size={135} className="-rotate-45" />
+      </ParallaxBlock>
+
       {/* Soft floating bouquet watermark */}
-      <ParallaxBlock speed={0.22} className="pointer-events-none absolute -right-8 top-10 opacity-[0.14] sm:right-8">
+      <ParallaxBlock speed={0.22} className="pointer-events-none absolute -right-8 top-10 opacity-[0.22] sm:right-8">
         <img
           src="/assets/layers/layer-05-bouquet.png"
           alt="Golden Floral Accent"
           className="w-40 rotate-12 sm:w-52"
         />
+        <div className="absolute -left-4 -top-4">
+          <FloralMotif size={85} className="rotate-12" opacity={0.8} />
+        </div>
       </ParallaxBlock>
 
       <Reveal className="mx-auto flex max-w-md flex-col items-center text-center">
@@ -54,13 +63,13 @@ export default function InviteMessage() {
             variants={staggerItem}
             className="text-[11px] uppercase tracking-[0.28em] text-[#7a6d60]"
           >
-            {wedding.brideParents}
+            {wedding.groomParents}
           </motion.p>
           <motion.p
             variants={staggerItem}
             className="text-[11px] uppercase tracking-[0.28em] text-[#7a6d60]"
           >
-            {wedding.groomParents}
+            {wedding.brideParents}
           </motion.p>
         </Stagger>
       </Reveal>

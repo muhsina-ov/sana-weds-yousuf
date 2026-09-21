@@ -55,7 +55,7 @@ export default function Footer() {
           We can't wait to celebrate with you
         </p>
         <p className="text-[11px] uppercase tracking-[0.32em] text-[#7a6d60]">
-          With love, the Fatima & Qureshi families
+          With love, the Qureshi & Fatima families
         </p>
         <div className="h-px w-28 bg-[#1a1814]/15" />
         <motion.button
